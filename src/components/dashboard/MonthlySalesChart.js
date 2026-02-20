@@ -15,6 +15,8 @@ import {
   CartesianGrid,
 } from "recharts";
 import Skeleton from "react-loading-skeleton";
+import EmptyState from "../ui/EmptyState";
+import { ChartBarIcon } from "@heroicons/react/24/outline";
 
 export default function MonthlySalesChart({ loading }) {
   const user = useSelector((s) => s.auth.user);
@@ -60,6 +62,14 @@ export default function MonthlySalesChart({ loading }) {
 
       {loading ? (
         <Skeleton height={265} width="100%" />
+      ) : data.length === 0 ? (
+        <div className="h-75 flex items-center justify-center">
+          <EmptyState
+            icon={ChartBarIcon}
+            title="No sales data yet"
+            description="Monthly sales will appear once you start receiving orders."
+          />
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>

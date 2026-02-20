@@ -117,7 +117,7 @@ export default function Header({ onMenuClick }) {
         </button>
 
         {/* Desktop Search */}
-        <div className="hidden md:flex items-center w-full max-w-md bg-slate-100 rounded-lg px-3 py-2 relative">
+        {/* <div className="hidden md:flex items-center w-full max-w-md bg-slate-100 rounded-lg px-3 py-2 relative">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 mr-2" />
           <input
             placeholder="Search orders, customers..."
@@ -160,7 +160,7 @@ export default function Header({ onMenuClick }) {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
 
       {/* Right Side */}
@@ -189,7 +189,7 @@ export default function Header({ onMenuClick }) {
             </div>
 
             <span className="text-sm font-medium hidden md:block text-gray-700 truncate max-w-[120px]">
-              {user?.email}
+              {user?.name}
             </span>
 
             <ChevronDownIcon className="h-4 w-4 text-gray-500" />

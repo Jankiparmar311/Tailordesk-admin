@@ -15,10 +15,14 @@ import {
   CartesianGrid,
 } from "recharts";
 import Skeleton from "react-loading-skeleton";
+import EmptyState from "../ui/EmptyState";
+import { CurrencyRupeeIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export default function RevenueChart({ loading }) {
   const user = useSelector((s) => s.auth.user);
   const [data, setData] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (!user?.shopId) return;
@@ -60,6 +64,22 @@ export default function RevenueChart({ loading }) {
 
       {loading ? (
         <Skeleton height={265} width="100%" />
+      ) : data?.length === 0 ? (
+        <div className="h-80 flex items-center justify-center">
+          <EmptyState
+            icon={CurrencyRupeeIcon}
+            title="No revenue yet"
+            description="Revenue will appear once you start receiving orders."
+            action={
+              <button
+                onClick={() => router.push("/customers")}
+                className="text-sm text-indigo-600 font-medium hover:underline"
+              >
+                Create first order
+              </button>
+            }
+          />
+        </div>
       ) : (
         <ResponsiveContainer width="100%" height={320}>
           <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5 }}>

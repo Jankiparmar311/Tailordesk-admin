@@ -12,6 +12,8 @@ import {
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
+import EmptyState from "../ui/EmptyState";
+import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 
 export default function RecentOrders({ shopId, loading }) {
   const [orders, setOrders] = useState([]);
@@ -82,7 +84,21 @@ export default function RecentOrders({ shopId, loading }) {
       {loading ? (
         <Skeleton width="100%" height={300} />
       ) : orders.length === 0 ? (
-        <p className="p-6 text-center text-gray-500">No recent orders</p>
+        <div className="py-12">
+          <EmptyState
+            icon={ClipboardDocumentListIcon}
+            title="No orders yet"
+            description="Your recent orders will appear here once you create them."
+            action={
+              <button
+                onClick={() => router.push("/customers")}
+                className="text-sm text-indigo-600 font-medium hover:underline"
+              >
+                Create your first order
+              </button>
+            }
+          />
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

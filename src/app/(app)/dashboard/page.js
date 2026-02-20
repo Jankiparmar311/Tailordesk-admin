@@ -31,6 +31,10 @@ export default function Dashboard() {
     statusData: [],
   });
 
+  const totalOrders = stats.statusData.reduce(
+    (sum, item) => sum + item.value,
+    0,
+  );
   useEffect(() => {
     if (!user?.shopId) return;
 
@@ -129,6 +133,14 @@ export default function Dashboard() {
             <div className="flex flex-col md:flex-row items-center">
               {loading ? (
                 <Skeleton height={260} width={380} />
+              ) : totalOrders === 0 ? (
+                <div className="h-65 flex p-5 flex-col items-center justify-center text-center">
+                  <ClockIcon className="w-10 h-10 text-gray-300 mb-3" />
+                  <p className="text-gray-500 text-sm">No orders yet</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Orders will appear here once created.
+                  </p>
+                </div>
               ) : (
                 <ResponsiveContainer width="100%" height={260}>
                   <PieChart>

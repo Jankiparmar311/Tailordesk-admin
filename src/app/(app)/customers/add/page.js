@@ -79,7 +79,10 @@ export default function AddCustomer() {
               label="Customer Name"
               name="name"
               register={register}
-              registerOptions={{ required: "Please enter customer name." }}
+              registerOptions={{
+                required: "Please enter customer name.",
+                setValueAs: (value) => value.trim(),
+              }}
               error={errors.name}
             />
 
@@ -87,7 +90,22 @@ export default function AddCustomer() {
               label="Phone"
               name="phone"
               register={register}
-              registerOptions={{ required: "Please enter phone number." }}
+              registerOptions={{
+                required: "Please enter phone number.",
+                setValueAs: (value) => value.trim(),
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Only numbers are allowed.",
+                },
+                minLength: {
+                  value: 10,
+                  message: "Phone number must be 10 digits.",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Phone number must be 10 digits.",
+                },
+              }}
               error={errors.phone}
             />
 

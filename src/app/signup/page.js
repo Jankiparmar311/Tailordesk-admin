@@ -12,12 +12,15 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 export default function SignupPage() {
+  const [loading, setLoading] = useState();
   const router = useRouter();
 
   const {
@@ -31,6 +34,7 @@ export default function SignupPage() {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const userCred = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -59,9 +63,15 @@ export default function SignupPage() {
         role: "owner",
         createdAt: serverTimestamp(),
       });
+      setLoading(false);
+      // verify user exists
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists()) throw new Error("User doc not created");
 
-      router.push("/dashboard");
+      toast.success("Signup successful");
+      router.replace("/dashboard");
     } catch (error) {
+      setLoading(false);
       toast.error(error.message);
     }
   };
@@ -91,7 +101,10 @@ export default function SignupPage() {
             name="ownerName"
             register={register}
             error={errors.ownerName}
-            registerOptions={{ required: "Please enter owner name." }}
+            registerOptions={{
+              required: "Please enter owner name.",
+              setValueAs: (value) => value.trim(),
+            }}
           />
 
           <Input
@@ -99,7 +112,10 @@ export default function SignupPage() {
             name="shopName"
             register={register}
             error={errors.shopName}
-            registerOptions={{ required: "Please enter shop name." }}
+            registerOptions={{
+              required: "Please enter shop name.",
+              setValueAs: (value) => value.trim(),
+            }}
           />
 
           <Input
@@ -108,7 +124,10 @@ export default function SignupPage() {
             type="email"
             register={register}
             error={errors.email}
-            registerOptions={{ required: "Please enter email." }}
+            registerOptions={{
+              required: "Please enter email.",
+              setValueAs: (value) => value.trim(),
+            }}
           />
 
           <Input
@@ -116,7 +135,22 @@ export default function SignupPage() {
             name="phone"
             register={register}
             error={errors.phone}
-            registerOptions={{ required: "Please enter phone number." }}
+            registerOptions={{
+              required: "Please enter phone number.",
+              setValueAs: (value) => value.trim(),
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Only numbers are allowed.",
+              },
+              minLength: {
+                value: 10,
+                message: "Phone number must be 10 digits.",
+              },
+              maxLength: {
+                value: 10,
+                message: "Phone number must be 10 digits.",
+              },
+            }}
           />
 
           <Input
@@ -131,6 +165,7 @@ export default function SignupPage() {
                 value: 6,
                 message: "Min 6 characters.",
               },
+              setValueAs: (value) => value.trim(),
             }}
           />
 
@@ -144,6 +179,7 @@ export default function SignupPage() {
               required: "Please enter confirm password.",
               validate: (value) =>
                 value === password || "Passwords do not match.",
+              setValueAs: (value) => value.trim(),
             }}
           />
 
@@ -151,19 +187,11 @@ export default function SignupPage() {
             className="bg-linear-to-r from-indigo-600 to-purple-600
 text-white w-full py-3 rounded-md font-medium
 hover:opacity-95 transition"
+            disabled={loading}
           >
-            Create Account
+            {loading ? "Creating..." : "Create Account"}
           </button>
 
-          {/* <button
-            type="button"
-            onClick={handleGoogleSignup}
-            className="border w-full py-3 rounded-md hover:bg-gray-50 transition"
-          >
-            Continue with Google
-          </button> */}
-
-          {/* Footer */}
           <div className="text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link

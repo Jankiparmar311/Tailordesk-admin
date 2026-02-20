@@ -81,7 +81,10 @@ export default function LoginPage() {
             type="email"
             register={register}
             error={errors.email}
-            registerOptions={{ required: "Please enter email address." }}
+            registerOptions={{
+              required: "Please enter email address.",
+              setValueAs: (value) => value.trim(),
+            }}
           />
 
           <Input
@@ -90,13 +93,17 @@ export default function LoginPage() {
             type="password"
             register={register}
             error={errors.password}
-            registerOptions={{ required: "Please enter password." }}
+            registerOptions={{
+              required: "Please enter password.",
+              setValueAs: (value) => value.trim(),
+            }}
           />
 
           <button
             className="bg-linear-to-r from-indigo-600 to-purple-600
 text-white w-full py-3 rounded-md font-medium
 hover:opacity-95 transition disabled:opacity-60"
+            disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
@@ -113,14 +120,14 @@ hover:opacity-95 transition disabled:opacity-60"
               </Link>
             </p>
 
-            <p>
+            {/* <p>
               <Link
                 href="/forgot-password"
                 className="text-indigo-600 hover:underline"
               >
                 Forgot password?
               </Link>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>

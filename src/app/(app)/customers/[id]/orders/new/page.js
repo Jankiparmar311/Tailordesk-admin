@@ -105,7 +105,7 @@ export default function NewOrder() {
     setPreviews(previewUrls);
   };
 
-  if (!customer) return <p className="p-6">Loading...</p>;
+  if (!customer) return <p className="p-6">Please add customer first.</p>;
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6">
@@ -127,7 +127,10 @@ export default function NewOrder() {
               label="Cloth Type"
               name="clothType"
               register={register}
-              registerOptions={{ required: "Please enter cloth type." }}
+              registerOptions={{
+                required: "Please enter cloth type.",
+                setValueAs: (value) => value.trim(),
+              }}
               error={errors.clothType}
             />
 
@@ -136,7 +139,10 @@ export default function NewOrder() {
               name="deliveryDate"
               type="date"
               register={register}
-              registerOptions={{ required: "Please select delivery date." }}
+              registerOptions={{
+                required: "Please select delivery date.",
+                setValueAs: (value) => value.trim(),
+              }}
               error={errors.deliveryDate}
             />
 
@@ -145,7 +151,10 @@ export default function NewOrder() {
               name="price"
               type="number"
               register={register}
-              registerOptions={{ required: "Please enter price." }}
+              registerOptions={{
+                required: "Please enter price.",
+                setValueAs: (value) => value.trim(),
+              }}
               error={errors.price}
             />
 

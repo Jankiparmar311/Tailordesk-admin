@@ -95,7 +95,10 @@ export default function EditOrder() {
               name="clothType"
               register={register}
               error={errors.clothType}
-              registerOptions={{ required: "Please enter cloth type." }}
+              registerOptions={{
+                required: "Please enter cloth type.",
+                setValueAs: (value) => value.trim(),
+              }}
             />
 
             <Input
@@ -104,7 +107,10 @@ export default function EditOrder() {
               type="date"
               register={register}
               error={errors.deliveryDate}
-              registerOptions={{ required: "Please select delivery date." }}
+              registerOptions={{
+                required: "Please select delivery date.",
+                setValueAs: (value) => value.trim(),
+              }}
             />
 
             <Input
@@ -113,7 +119,10 @@ export default function EditOrder() {
               type="number"
               register={register}
               error={errors.price}
-              registerOptions={{ required: "Please enter price." }}
+              registerOptions={{
+                required: "Please enter price.",
+                setValueAs: (value) => value.trim(),
+              }}
             />
 
             <Input
