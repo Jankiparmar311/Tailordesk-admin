@@ -13,14 +13,7 @@ export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [dragActive, setDragActive] = useState(false);
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragActive(false);
-
-    const file = e.dataTransfer.files?.[0];
-    if (file) uploadAvatar(file);
-  };
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
@@ -32,7 +25,7 @@ export default function Profile() {
       formData.append("upload_preset", "profile-images");
 
       const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dkhq6jzxr/image/upload",
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         {
           method: "POST",
           body: formData,
