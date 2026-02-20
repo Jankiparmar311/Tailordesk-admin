@@ -168,17 +168,21 @@ export default function OrdersPage() {
 
       {/* Table */}
       <div className="bg-white border border-gray-200 rounded-xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-xs sm:text-sm">
             <thead className="bg-slate-50 border-b border-gray-200 text-gray-600">
               <tr>
                 <th className="p-4 text-left font-medium">Cloth</th>
                 <th className="p-4 text-left font-medium">Customer</th>
 
                 <th className="p-4 text-left font-medium">Price</th>
-                <th className="p-4 text-left font-medium">Remaining</th>
+                <th className="hidden md:table-cell p-4 text-left font-medium">
+                  Remaining
+                </th>
 
-                <th className="p-4 text-left font-medium">Delivery</th>
+                <th className="hidden md:table-cell p-4 text-left font-medium">
+                  Delivery
+                </th>
                 <th className="p-4 text-left font-medium">Status</th>
                 <th className="p-4 text-left flex gap-2 font-medium">
                   Actions
@@ -189,7 +193,7 @@ export default function OrdersPage() {
             <tbody>
               {filteredOrders?.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="p-6 text-center text-gray-500">
+                  <td colSpan="7" className="p-6 text-center text-gray-500">
                     {search ? "No orders found" : "No orders yet"}
                   </td>
                 </tr>
@@ -201,13 +205,13 @@ export default function OrdersPage() {
                   className="border-b border-gray-200 hover:bg-gray-50 transition"
                 >
                   <td
-                    className="p-4 cursor-pointer font-medium text-gray-900"
+                    className="p-4 whitespace-nowrap cursor-pointer font-medium text-gray-900"
                     onClick={() => router.push(`/orders/${order.id}`)}
                   >
                     {order.clothType}
                   </td>
                   <td
-                    className="p-4 cursor-pointer text-gray-900"
+                    className="p-4 whitespace-nowrap cursor-pointer text-gray-900"
                     onClick={() =>
                       router.push(`/customers/${order.customerId}`)
                     }
@@ -215,16 +219,20 @@ export default function OrdersPage() {
                     {order.customerName || "Customer"}
                   </td>
 
-                  <td className="p-4">₹{order.price}</td>
-                  <td className="p-4">
+                  <td className="p-4 whitespace-nowrap">₹{order.price}</td>
+                  <td className="hidden md:table-cell p-4">
                     ₹{(order.price || 0) - (order.advancePaid || 0)}
                   </td>
 
-                  <td className="p-4">{order.deliveryDate}</td>
+                  <td className="hidden md:table-cell p-4">
+                    {order.deliveryDate}
+                  </td>
 
-                  <td className="p-4">{getStatusBadge(order.status)}</td>
+                  <td className="p-4 whitespace-nowrap">
+                    {getStatusBadge(order.status)}
+                  </td>
 
-                  <td className="p-4">
+                  <td className="p-4 whitespace-nowrap">
                     <button
                       onClick={() => router.push(`/orders/${order.id}/edit`)}
                       className="p-2 rounded-lg hover:bg-indigo-50 text-indigo-600"

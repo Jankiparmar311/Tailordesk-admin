@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import Input from "@/components/input";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,15 +40,15 @@ export default function LoginPage() {
 
       const token = await userCred.user.getIdToken();
       Cookies.set("authToken", token, { expires: 7 });
-
+      toast.success("Login successfully.");
       router.push("/dashboard");
     } catch (error) {
       if (error.code === "auth/user-not-found") {
-        alert("User not found");
+        toast.error("User not found");
       } else if (error.code === "auth/wrong-password") {
-        alert("Incorrect password");
+        toast.error("Incorrect password");
       } else {
-        alert("Login failed");
+        toast.error("Login failed");
       }
     } finally {
       setLoading(false);
@@ -80,7 +81,7 @@ export default function LoginPage() {
             type="email"
             register={register}
             error={errors.email}
-            registerOptions={{ required: "Email required" }}
+            registerOptions={{ required: "Please enter email address." }}
           />
 
           <Input
@@ -89,7 +90,7 @@ export default function LoginPage() {
             type="password"
             register={register}
             error={errors.password}
-            registerOptions={{ required: "Password required" }}
+            registerOptions={{ required: "Please enter password." }}
           />
 
           <button

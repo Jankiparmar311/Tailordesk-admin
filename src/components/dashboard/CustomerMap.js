@@ -99,44 +99,52 @@ export default function CustomerMap() {
 
     // CLEANUP ON UNMOUNT
     return () => {
-      if (mapInstanceRef.current) {
+      if (mapInstanceRef?.current) {
         mapInstanceRef.current.destroy();
       }
     };
   }, [user?.shopId]); // stable dependency
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
+      {/* Map */}
       <div
         ref={mapRef}
-        className="w-full h-55 shrink-0 border border-gray-200 rounded-xl"
+        className="w-full h-48 sm:h-56 lg:h-64 border border-gray-200 rounded-xl"
       />
 
       {/* Country List */}
-      <div className="space-y-3 mt-4 overflow-y-auto">
+      <div className="space-y-3 mt-4 overflow-y-auto max-h-72 pr-1">
         {countryStats.map((c) => (
-          <div key={c.country} className="flex justify-between gap-4">
-            <div className="flex items-center gap-3">
+          <div
+            key={c.country}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+          >
+            {/* Left Section */}
+            <div className="flex items-center gap-3 min-w-0">
               <img
                 src={`https://flagcdn.com/w40/${c.code?.toLowerCase()}.png`}
-                className="w-8 h-6 rounded"
+                className="w-8 h-6 rounded shrink-0"
+                alt={c.country}
               />
-              <div>
-                <p className="font-medium">{c.country}</p>
+
+              <div className="min-w-0">
+                <p className="font-medium truncate">{c.country}</p>
                 <p className="text-sm text-gray-500">
                   {c.count} {c.count === 1 ? "Customer" : "Customers"}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 w-1/2">
+            {/* Right Section */}
+            <div className="flex items-center gap-3 w-full sm:w-1/2">
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-indigo-600 h-2 rounded-full"
                   style={{ width: `${c.percent}%` }}
                 />
               </div>
-              <span className="text-sm font-medium">{c.percent}%</span>
+              <span className="text-sm font-medium shrink-0">{c.percent}%</span>
             </div>
           </div>
         ))}

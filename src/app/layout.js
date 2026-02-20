@@ -3,6 +3,8 @@ import "./globals.css";
 import Providers from "./providers";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

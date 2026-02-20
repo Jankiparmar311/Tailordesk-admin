@@ -18,7 +18,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-slate-50 border-r border-gray-200 min-h-screen flex flex-col">
+    <aside className="w-64 shrink-0 bg-slate-50 border-r border-gray-200 min-h-screen flex flex-col">
       {/* Logo */}
       <div className="px-6 py-5 bg-white">
         <h2 className="text-xl font-semibold text-indigo-600">TailorDesk</h2>

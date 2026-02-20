@@ -110,13 +110,21 @@ export default function CustomersPage() {
       {/* Table Card */}
       <div className="bg-white border border-gray-200 rounded-xl">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-xs sm:text-sm">
             <thead className="bg-slate-50 border-b border-gray-200 text-gray-600">
               <tr>
-                <th className="p-4 text-left font-medium">Name</th>
-                <th className="p-4 text-left font-medium">Phone</th>
-                <th className="p-4 text-left font-medium">Address</th>
-                <th className="p-4 text-left font-medium">Actions</th>
+                <th className="p-4 text-left font-medium whitespace-nowrap">
+                  Name
+                </th>
+                <th className="p-4 text-left font-medium whitespace-nowrap">
+                  Phone
+                </th>
+                <th className="hidden md:table-cell p-4 text-left font-medium">
+                  Address
+                </th>
+                <th className="p-4 text-left font-medium whitespace-nowrap">
+                  Actions
+                </th>
               </tr>
             </thead>
 
@@ -152,7 +160,9 @@ export default function CustomersPage() {
                   </td>
 
                   <td className="p-4">{c.phone}</td>
-                  <td className="p-4">{c.address || "-"}</td>
+                  <td className="hidden md:table-cell p-4">
+                    {c.address || "-"}
+                  </td>
 
                   <td className="p-4">
                     <div className="flex items-center gap-3">

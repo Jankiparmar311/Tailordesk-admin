@@ -95,7 +95,7 @@ export default function EditOrder() {
               name="clothType"
               register={register}
               error={errors.clothType}
-              registerOptions={{ required: "Required" }}
+              registerOptions={{ required: "Please enter cloth type." }}
             />
 
             <Input
@@ -104,6 +104,7 @@ export default function EditOrder() {
               type="date"
               register={register}
               error={errors.deliveryDate}
+              registerOptions={{ required: "Please select delivery date." }}
             />
 
             <Input
@@ -112,6 +113,7 @@ export default function EditOrder() {
               type="number"
               register={register}
               error={errors.price}
+              registerOptions={{ required: "Please enter price." }}
             />
 
             <Input
@@ -119,7 +121,6 @@ export default function EditOrder() {
               name="advancePaid"
               type="number"
               register={register}
-              error={errors.advancePaid}
             />
           </div>
 

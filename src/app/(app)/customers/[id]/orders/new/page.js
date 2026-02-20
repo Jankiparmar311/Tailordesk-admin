@@ -127,7 +127,7 @@ export default function NewOrder() {
               label="Cloth Type"
               name="clothType"
               register={register}
-              registerOptions={{ required: "Required" }}
+              registerOptions={{ required: "Please enter cloth type." }}
               error={errors.clothType}
             />
 
@@ -136,7 +136,7 @@ export default function NewOrder() {
               name="deliveryDate"
               type="date"
               register={register}
-              registerOptions={{ required: "Required" }}
+              registerOptions={{ required: "Please select delivery date." }}
               error={errors.deliveryDate}
             />
 
@@ -145,7 +145,7 @@ export default function NewOrder() {
               name="price"
               type="number"
               register={register}
-              registerOptions={{ required: "Required" }}
+              registerOptions={{ required: "Please enter price." }}
               error={errors.price}
             />
 

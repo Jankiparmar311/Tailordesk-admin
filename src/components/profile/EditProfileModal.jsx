@@ -11,7 +11,14 @@ export default function EditProfileModal({
   onClose,
   onSaved,
 }) {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+  });
 
   useEffect(() => {
     if (!profile || !open) return;

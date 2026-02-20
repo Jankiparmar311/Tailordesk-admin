@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   const user = useSelector((state) => state.auth.user);
@@ -52,9 +53,9 @@ export default function Profile() {
         ...prev,
         photoURL: data.secure_url,
       }));
+      toast.success("Image upload successfully.");
     } catch (err) {
-      console.error(err);
-      alert("Image upload failed");
+      toast.error("Image upload failed");
     }
   };
 

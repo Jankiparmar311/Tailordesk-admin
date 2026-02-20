@@ -1,11 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import Input from "@/components/input";
@@ -19,6 +15,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -65,18 +62,7 @@ export default function SignupPage() {
 
       router.push("/dashboard");
     } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const handleGoogleSignup = async () => {
-    const provider = new GoogleAuthProvider();
-
-    try {
-      await signInWithPopup(auth, provider);
-      router.push("/dashboard");
-    } catch (err) {
-      alert(err.message);
+      toast.error(error.message);
     }
   };
 
@@ -105,7 +91,7 @@ export default function SignupPage() {
             name="ownerName"
             register={register}
             error={errors.ownerName}
-            registerOptions={{ required: "Owner name required" }}
+            registerOptions={{ required: "Please enter owner name." }}
           />
 
           <Input
@@ -113,7 +99,7 @@ export default function SignupPage() {
             name="shopName"
             register={register}
             error={errors.shopName}
-            registerOptions={{ required: "Shop name required" }}
+            registerOptions={{ required: "Please enter shop name." }}
           />
 
           <Input
@@ -122,7 +108,7 @@ export default function SignupPage() {
             type="email"
             register={register}
             error={errors.email}
-            registerOptions={{ required: "Email required" }}
+            registerOptions={{ required: "Please enter email." }}
           />
 
           <Input
@@ -130,7 +116,7 @@ export default function SignupPage() {
             name="phone"
             register={register}
             error={errors.phone}
-            registerOptions={{ required: "Phone required" }}
+            registerOptions={{ required: "Please enter phone number." }}
           />
 
           <Input
@@ -140,10 +126,10 @@ export default function SignupPage() {
             register={register}
             error={errors.password}
             registerOptions={{
-              required: "Password required",
+              required: "Please enter password.",
               minLength: {
                 value: 6,
-                message: "Min 6 characters",
+                message: "Min 6 characters.",
               },
             }}
           />
@@ -155,9 +141,9 @@ export default function SignupPage() {
             register={register}
             error={errors.confirmPassword}
             registerOptions={{
-              required: "Confirm password",
+              required: "Please enter confirm password.",
               validate: (value) =>
-                value === password || "Passwords do not match",
+                value === password || "Passwords do not match.",
             }}
           />
 

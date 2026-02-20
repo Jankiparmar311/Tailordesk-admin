@@ -9,6 +9,7 @@ import { useState } from "react";
 import Input from "@/components/input";
 
 import { Country, State, City } from "country-state-city";
+import { toast } from "react-toastify";
 
 export default function AddCustomer() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function AddCustomer() {
         address: data.address || "",
 
         country: data.country,
-        countryCode: data.countryCode, // ✅ added
+        countryCode: data.countryCode,
         state: data.state,
         city: data.city,
 
@@ -55,10 +56,10 @@ export default function AddCustomer() {
         notes: data.notes || "",
         createdAt: serverTimestamp(),
       });
-
+      toast.success("Customer added successfully>");
       router.push("/customers");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -78,7 +79,7 @@ export default function AddCustomer() {
               label="Customer Name"
               name="name"
               register={register}
-              registerOptions={{ required: "Name is required" }}
+              registerOptions={{ required: "Please enter customer name." }}
               error={errors.name}
             />
 
@@ -86,7 +87,7 @@ export default function AddCustomer() {
               label="Phone"
               name="phone"
               register={register}
-              registerOptions={{ required: "Phone is required" }}
+              registerOptions={{ required: "Please enter phone number." }}
               error={errors.phone}
             />
 

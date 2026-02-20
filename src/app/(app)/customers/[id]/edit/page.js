@@ -18,9 +18,9 @@ export default function EditCustomer() {
   const [countries] = useState(Country.getAllCountries());
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const [countryCode, setCountryCode] = useState("");
-  const [stateCode, setStateCode] = useState("");
 
   const {
     register,
@@ -63,8 +63,6 @@ export default function EditCustomer() {
 
           const stateObj = statesData.find((s) => s.name === data.state);
           if (stateObj) {
-            setStateCode(stateObj.isoCode);
-
             const citiesData = City.getCitiesOfState(
               country.isoCode,
               stateObj.isoCode,
@@ -81,6 +79,7 @@ export default function EditCustomer() {
   }, [params?.id, setValue, countries]);
 
   const onSubmit = async (data) => {
+    setIsSubmit(true);
     await updateDoc(doc(db, "customers", params?.id), {
       name: data.name,
       phone: data.phone,
@@ -102,6 +101,7 @@ export default function EditCustomer() {
     });
 
     router.push("/customers");
+    setIsSubmit(false);
   };
 
   if (loading) return <p className="p-6">Loading...</p>;
@@ -120,7 +120,7 @@ export default function EditCustomer() {
               label="Customer Name"
               name="name"
               register={register}
-              registerOptions={{ required: "Name required" }}
+              registerOptions={{ required: "Please enter customer name." }}
               error={errors.name}
             />
 
@@ -128,7 +128,7 @@ export default function EditCustomer() {
               label="Phone"
               name="phone"
               register={register}
-              registerOptions={{ required: "Phone required" }}
+              registerOptions={{ required: "Please enter phone number." }}
               error={errors.phone}
             />
 
@@ -164,7 +164,6 @@ export default function EditCustomer() {
               className="border p-3 border-gray-200 rounded-md w-full"
               onChange={(e) => {
                 const selected = states.find((s) => s.name === e.target.value);
-                setStateCode(selected?.isoCode || "");
                 setCities(
                   City.getCitiesOfState(countryCode, selected?.isoCode || ""),
                 );
@@ -214,8 +213,11 @@ export default function EditCustomer() {
             />
           </div>
 
-          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-md font-medium transition">
-            Update Customer
+          <button
+            disabled={isSubmit}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-md font-medium transition"
+          >
+            {isSubmit ? "Updating..." : "Update Customer"}
           </button>
         </form>
       </div>

@@ -62,7 +62,7 @@ export default function OrderView() {
 
         <div className="bg-white p-5 rounded-xl shadow">
           <p className="text-gray-500 text-sm">Advance Paid</p>
-          <p className="text-xl font-semibold">₹{order.advancePaid}</p>
+          <p className="text-xl font-semibold">₹{order.advancePaid || 0}</p>
         </div>
 
         <div className="bg-white p-5 rounded-xl shadow">
