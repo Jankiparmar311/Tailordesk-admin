@@ -1,22 +1,50 @@
 # 🧵 TailorDesk Admin Panel
 
-TailorDesk is a modern admin dashboard for tailoring businesses.
-It helps tailors manage customers, orders, measurements, and workflow digitally instead of notebooks.
+A modern web admin dashboard for tailoring businesses to manage customers, orders, and measurements digitally.
 
-> ⚠️ This project is currently under active development.
+🌐 Live Demo: https://tailordesk-admin.vercel.app
+📦 Repository: https://github.com/Jankiparmar311/Tailordesk-admin
+
+> This project is currently under active development and new features are being added continuously.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-* 🔐 Authentication (Signup / Login / Logout)
-* 👤 Profile management
-* 👥 Customer management
-* 📦 Order management
-* 📊 Dashboard overview
-* 🖼 Image upload (cloth design / reference images)
-* 🧾 Measurement handling
-* 🔄 Real-time database updates
+### Authentication
+
+* Secure Signup & Login
+* Firebase Authentication
+* Protected routes using middleware
+* Persistent user session
+
+### Dashboard
+
+* Overview of business activity
+* Quick access navigation
+* Real-time updates
+
+### Customer Management
+
+* Add new customers
+* Store measurements
+* Edit & update customer details
+
+### Order Management
+
+* Create orders
+* Track order details
+* Attach design reference images
+
+### Profile
+
+* Admin profile page
+* Account management
+
+### Image Upload
+
+* Upload cloth/design images
+* Cloudinary storage integration
 
 ---
 
@@ -32,35 +60,41 @@ It helps tailors manage customers, orders, measurements, and workflow digitally 
 
 * Redux Toolkit
 
-**Backend / Services**
+**Backend & Services**
 
 * Firebase Authentication
 * Firebase Firestore Database
-* Cloudinary (Image Storage)
+* Cloudinary Image Hosting
 
 **Other**
 
-* Protected Routes Middleware
-* Environment based configuration
+* Route protection middleware
+* Environment-based configuration
 * Responsive UI
 
 ---
 
-## 📁 Project Structure
+## 📂 Folder Structure
 
 ```
 src/
- ├── app/              → Pages & routing
- ├── components/       → Reusable UI components
- ├── redux/            → Store & slices
- ├── lib/              → Firebase & utilities
- ├── middleware/       → Auth protection
- └── styles/           → Global styles
+ ├── app/
+ │   ├── (app)/           → Protected pages (dashboard, customers, orders, profile)
+ │   ├── login/           → Authentication
+ │   ├── signup/          → Authentication
+ │   ├── layout.js
+ │   └── providers.js
+ │
+ ├── components/          → Reusable UI components
+ ├── hooks/               → Custom React hooks
+ ├── lib/                 → Firebase & Cloudinary config
+ ├── store/               → Redux store & slices
+ └── middleware.js        → Route protection
 ```
 
 ---
 
-## ⚙️ Environment Variables
+## 🔐 Environment Variables
 
 Create `.env.local` in root:
 
@@ -73,23 +107,22 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
 ```
 
-> Do NOT commit `.env.local`
+⚠️ Do NOT commit `.env.local` to GitHub
 
 ---
 
 ## 🧪 Run Locally
 
 ```bash
-git clone https://github.com/jankiparmar311/tailordesk-admin.git
-cd tailordesk-admin
+git clone https://github.com/Jankiparmar311/Tailordesk-admin.git
+cd Tailordesk-admin
 npm install
 npm run dev
 ```
 
-App will run on:
+Open:
 
 ```
 http://localhost:3000
@@ -97,31 +130,32 @@ http://localhost:3000
 
 ---
 
-## 🔐 Authentication Flow
+## 🔒 Authentication Logic
 
-* Firebase handles login/signup
+* Firebase handles login & signup
 * Middleware protects private routes
-* Redux stores user session
 * Unauthorized users redirected to login
+* Redux stores authenticated user
 
 ---
 
-## 📦 Deployment
+## 🚀 Deployment
 
-Deployed on Vercel.
+The project is deployed on **Vercel**.
 
-Add same environment variables in Vercel dashboard before deploying.
+Before deploying, add all environment variables in:
+Vercel Dashboard → Project → Settings → Environment Variables
 
 ---
 
 ## 📌 Upcoming Features
 
-* Invoice generation (PDF)
+* Invoice PDF generation
 * Order status timeline
-* SMS / WhatsApp notifications
-* Advanced analytics
-* Multi-staff support
-* Role based permissions
+* WhatsApp notifications
+* Role based staff accounts
+* Analytics dashboard
+* Dark mode
 
 ---
 
@@ -133,4 +167,4 @@ Add same environment variables in Vercel dashboard before deploying.
 
 ## 📄 License
 
-This project is for learning & portfolio purposes.
+This project is created for learning and portfolio purposes.
