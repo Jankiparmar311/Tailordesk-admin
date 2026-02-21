@@ -85,7 +85,7 @@ export default function CustomerView() {
     }
   };
 
-  if (!customer) return <p className="p-6">Please create customer first.</p>;
+  if (!customer) return <p className="p-6">Loading...</p>;
 
   return (
     <div className="max-w-4xl mx-auto">

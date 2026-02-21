@@ -96,16 +96,16 @@ export default function NewOrder() {
   };
 
   const handleFiles = (files) => {
-    const arr = Array.from(files);
+    const newFiles = Array.from(files);
 
-    setImages(arr);
+    setImages((prev) => [...prev, ...newFiles]);
 
-    const previewUrls = arr.map((file) => URL.createObjectURL(file));
+    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
 
-    setPreviews(previewUrls);
+    setPreviews((prev) => [...prev, ...newPreviews]);
   };
 
-  if (!customer) return <p className="p-6">Please add customer first.</p>;
+  if (!customer) return <p className="p-6">Loading...</p>;
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6">
@@ -138,6 +138,7 @@ export default function NewOrder() {
               label="Delivery Date"
               name="deliveryDate"
               type="date"
+              min={new Date().toISOString().split("T")[0]}
               register={register}
               registerOptions={{
                 required: "Please select delivery date.",
@@ -163,6 +164,19 @@ export default function NewOrder() {
               name="advancePaid"
               type="number"
               register={register}
+              registerOptions={{
+                validate: (value, formValues) => {
+                  const price = Number(formValues.price || 0);
+                  const advance = Number(value || 0);
+
+                  if (advance > price) {
+                    return "Advance paid cannot be greater than price.";
+                  }
+
+                  return true;
+                },
+              }}
+              error={errors.advancePaid}
             />
           </div>
         </div>
@@ -256,7 +270,7 @@ export default function NewOrder() {
           </button>
 
           <button
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700"
+            className="bg-indigo-600 disabled:bg-indigo-400 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700"
             disabled={uploading}
           >
             {uploading ? "Uploading..." : "Create Order"}

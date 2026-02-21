@@ -106,6 +106,7 @@ export default function EditOrder() {
               name="deliveryDate"
               type="date"
               register={register}
+              min={new Date().toISOString().split("T")[0]}
               error={errors.deliveryDate}
               registerOptions={{
                 required: "Please select delivery date.",
@@ -224,7 +225,7 @@ export default function EditOrder() {
 
           <button
             type="submit"
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700"
+            className="bg-indigo-600 disabled:bg-indigo-400 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700"
             disabled={uploading}
           >
             {uploading ? "Updating..." : "Update Order"}

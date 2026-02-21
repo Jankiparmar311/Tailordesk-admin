@@ -7,6 +7,7 @@ export default function Input({
   error,
   type = "text",
   registerOptions = {},
+  ...rest
 }) {
   return (
     <div className="space-y-1.5">
@@ -15,6 +16,7 @@ export default function Input({
       <input
         type={type}
         {...register(name, registerOptions)}
+        {...rest}
         className={`w-full rounded-md border px-3 py-2.5 text-sm
         transition outline-none bg-white
         ${

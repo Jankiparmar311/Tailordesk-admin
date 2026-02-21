@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useSelector } from "react-redux";
 
@@ -25,14 +31,12 @@ export default function MonthlySalesChart({ loading }) {
   useEffect(() => {
     if (!user?.shopId) return;
 
-    const fetchOrders = async () => {
-      const q = query(
-        collection(db, "orders"),
-        where("shopId", "==", user.shopId),
-      );
+    const q = query(
+      collection(db, "orders"),
+      where("shopId", "==", user.shopId),
+    );
 
-      const snap = await getDocs(q);
-
+    const unsubscribe = onSnapshot(q, (snap) => {
       const monthly = {};
 
       snap.docs.forEach((doc) => {
@@ -42,19 +46,19 @@ export default function MonthlySalesChart({ loading }) {
         const date = new Date(o.createdAt.seconds * 1000);
         const month = date.toLocaleString("default", { month: "short" });
 
-        monthly[month] = (monthly[month] || 0) + (o.price || 0);
+        monthly[month] = (monthly[month] || 0) + Number(o.price || 0);
       });
 
-      const chartData = Object.keys(monthly).map((m) => ({
-        month: m,
-        sales: monthly[m],
+      const chartData = Object.entries(monthly).map(([month, sales]) => ({
+        month,
+        sales,
       }));
 
       setData(chartData);
-    };
+    });
 
-    fetchOrders();
-  }, [user]);
+    return () => unsubscribe(); // VERY IMPORTANT
+  }, [user?.shopId]);
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6">
